@@ -42,7 +42,15 @@ When running this command:
 * It contains a new block
 * The plugin register the block (it will available)
 
-### Minor plugin congif changes
+### Reorganizing the plugin
+
+* create the src/blocks/<block-name> folder
+
+It's possible to check the registered block
+
+```js
+wp.blocks.getBlockTypes().map( block => block.name )
+```
 
 Change the entry point
 
