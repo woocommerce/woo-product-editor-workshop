@@ -75,3 +75,24 @@ add_action(
 	'woocommerce_block_template_area_product-form_after_add_block_product-sale-price',
 	'woo_product_editor_ai_workshop_extend_sale_price_section'
 );
+
+
+/**
+ * Customize the sale label text
+ *
+ * @param string $text
+ * @return string
+ */
+function custom_sale_label_flash( $text ) {
+	global $product;
+	if ( ! $product->get_meta( 'onsale_label' ) ) {
+		return $text;
+	}
+
+	// escape the text to make it safe
+	$text = esc_html( $product->get_meta( 'onsale_label' ) );
+
+    return '<span class="onsale">' . $text . '</span>';
+}
+
+add_filter('woocommerce_sale_flash', 'custom_sale_label_flash');
