@@ -1,1 +1,1 @@
-console.log( 'Initializing...' );
+import './style.scss';

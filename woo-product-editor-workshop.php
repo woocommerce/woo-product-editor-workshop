@@ -44,6 +44,18 @@ function woo_product_editor_ai_workshop_enqueue_admin_assets() {
 
 add_action( 'enqueue_block_editor_assets', 'woo_product_editor_ai_workshop_enqueue_admin_assets' );
 
+// Enqueue styles in the frontend
+function woo_product_editor_ai_workshop_enqueue_frontend_assets() {
+	wp_enqueue_style(
+		'woo-product-editor-ai-workshop-frontend-css',
+		plugins_url( 'build/style-index.ts.css', __FILE__ ),
+		[],
+		filemtime( plugin_dir_path( __FILE__ ) . 'build/style-index.ts.css' )
+	);
+}
+
+add_action( 'wp_enqueue_scripts', 'woo_product_editor_ai_workshop_enqueue_frontend_assets' );
+
 /*
  * Add Onsale label block to the 
  * the Sale Price section of the General tab
@@ -67,18 +79,15 @@ function woo_product_editor_ai_workshop_extend_sale_price_section( $product_name
 	);
 }
 
-/*
- * Render the Onsale label in the frontend
- * when the metadata is set
- */
 add_action(
 	'woocommerce_block_template_area_product-form_after_add_block_product-sale-price',
 	'woo_product_editor_ai_workshop_extend_sale_price_section'
 );
 
 
-/**
- * Customize the sale label text
+/*
+ * Render the Onsale label in the frontend
+ * when the metadata is set
  *
  * @param string $text
  * @return string
@@ -92,7 +101,7 @@ function custom_sale_label_flash( $text ) {
 	// escape the text to make it safe
 	$text = esc_html( $product->get_meta( 'onsale_label' ) );
 
-    return '<span class="onsale">' . $text . '</span>';
+    return '<span class="onsale custom-onsale">' . $text . '</span>';
 }
 
 add_filter('woocommerce_sale_flash', 'custom_sale_label_flash');
