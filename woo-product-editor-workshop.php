@@ -40,6 +40,13 @@ function woo_product_editor_ai_workshop_enqueue_admin_assets() {
 		$asset_file['dependencies'],
 		$asset_file['version']
 	);
+
+	wp_enqueue_style(
+		'woo-product-editor-ai-workshop-editor-css',
+		plugins_url( 'build/index.ts.css', __FILE__ ),
+		[],
+		filemtime( plugin_dir_path( __FILE__ ) . 'build/index.ts.css' )
+	);
 }
 
 add_action( 'enqueue_block_editor_assets', 'woo_product_editor_ai_workshop_enqueue_admin_assets' );
@@ -48,9 +55,9 @@ add_action( 'enqueue_block_editor_assets', 'woo_product_editor_ai_workshop_enque
 function woo_product_editor_ai_workshop_enqueue_frontend_assets() {
 	wp_enqueue_style(
 		'woo-product-editor-ai-workshop-frontend-css',
-		plugins_url( 'build/style-index.ts.css', __FILE__ ),
+		plugins_url( 'build/style-view.ts.css', __FILE__ ),
 		[],
-		filemtime( plugin_dir_path( __FILE__ ) . 'build/style-index.ts.css' )
+		filemtime( plugin_dir_path( __FILE__ ) . 'build/style-view.ts.css' )
 	);
 }
 
@@ -74,6 +81,8 @@ function woo_product_editor_ai_workshop_extend_sale_price_section( $product_name
 			'attributes' => [
 				'property' => 'meta_data.onsale_label',
 				'label'    => __( 'Onsale Label', 'woo-product-editor-ai-workshop' ),
+				'help'     => __( 'The label to display when the product is on sale.', 'woo-product-editor-ai-workshop' ),
+				'placeholder' => __( 'Onsale Label', 'woo-product-editor-ai-workshop' ),
 			],
 		]
 	);
