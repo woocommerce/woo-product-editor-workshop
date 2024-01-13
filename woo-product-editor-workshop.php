@@ -19,8 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
@@ -28,3 +26,20 @@ function woo_product_editor_ai_workshop_woo_product_editor_ai_workshop_block_ini
 	register_block_type( __DIR__ . '/build/blocks/onsale-label' );
 }
 add_action( 'init', 'woo_product_editor_ai_workshop_woo_product_editor_ai_workshop_block_init' );
+
+
+/**
+ * Enqueues the block's assets for the editor.
+ */
+function woo_product_editor_ai_workshop_enqueue_admin_assets() {
+	$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.ts.asset.php');
+
+	wp_enqueue_script(
+		'woo-product-editor-ai-workshop-admin-js',
+		plugins_url( 'build/index.ts.js', __FILE__ ),
+		$asset_file['dependencies'],
+		$asset_file['version']
+	);
+}
+
+add_action( 'enqueue_block_editor_assets', 'woo_product_editor_ai_workshop_enqueue_admin_assets' );

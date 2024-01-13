@@ -6,7 +6,8 @@
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"build": "wp-scripts build",
+		"build": "wp-scripts build src/index.ts --output-path=build/ && npm run build-blocks",
+		"build-blocks": "wp-scripts build --webpack-src-dir=src/blocks/ --output-path=build/blocks/",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
