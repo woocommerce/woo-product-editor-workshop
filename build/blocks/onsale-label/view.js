@@ -1,1 +1,0 @@
-console.log("Hello World! (from woocommerce-woo-product-editor-ai-workshop block)");
