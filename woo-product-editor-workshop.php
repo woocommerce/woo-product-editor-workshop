@@ -43,3 +43,35 @@ function woo_product_editor_ai_workshop_enqueue_admin_assets() {
 }
 
 add_action( 'enqueue_block_editor_assets', 'woo_product_editor_ai_workshop_enqueue_admin_assets' );
+
+/*
+ * Add Onsale label block to the 
+ * the Sale Price section of the General tab
+ */
+function woo_product_editor_ai_workshop_extend_sale_price_section( $product_name_field ) {
+	$parent = $product_name_field->get_parent();
+	if ( ! method_exists( $parent, 'add_block' ) ) {
+		return;
+	}
+
+	$parent->add_block(
+		[
+			'id'         => 'product-onsale-label',
+			'order'      => $product_name_field->get_order() + 10,
+			'blockName'  => 'woocommerce/product-text-field',
+			'attributes' => [
+				'property' => 'meta_data.onsale_label',
+				'label'    => __( 'Onsale Label', 'woo-product-editor-ai-workshop' ),
+			],
+		]
+	);
+}
+
+/*
+ * Render the Onsale label in the frontend
+ * when the metadata is set
+ */
+add_action(
+	'woocommerce_block_template_area_product-form_after_add_block_product-sale-price',
+	'woo_product_editor_ai_workshop_extend_sale_price_section'
+);
