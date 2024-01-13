@@ -12,7 +12,6 @@ npm install -g @wordpress/create-script
 cli install -g @wordpress/create-script
 ```
 
-
 ## Starting up the dev-env
 
 ```cli
