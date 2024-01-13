@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Woo Product Editor Workshop
- * Description:       Example block scaffolded with Create Block tool.
+ * Description:       A workshop to learn how to extend the WooCommerce Product Editor.
  * Requires at least: 6.1
  * Requires PHP:      7.0
  * Version:           0.1.0
