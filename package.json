@@ -13,7 +13,7 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start"
+		"start": "wp-scripts build --webpack-src-dir=src/blocks/ --output-path=build/blocks/ --watch"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^26.19.0"
