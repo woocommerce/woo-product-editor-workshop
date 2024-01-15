@@ -1,9 +1,9 @@
 # Create the WordPress plugin
 
-Let's create a WordPress plugin to implement the examples proposed in this workshop.
+Let's create a WordPress plugin using the core library [@wordpres/create-block](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) to implement the examples from this workshop.
 
 ```
-wp-create block
+wp-create-block
 ```
 
 When running this command:

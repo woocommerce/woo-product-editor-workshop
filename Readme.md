@@ -1,4 +1,4 @@
-# Woo Product Editor with AI Workshop
+# Woo Product Editor workshop
 
 ## Requirements
 
@@ -18,9 +18,7 @@ npm install -g @wordpress/create-script
 
 ## Create the WordPress plugin
 
-Let's create a WordPress plugin to implement the examples proposed in this workshop.
-
-[More](./src/docs/create-wordpress-plugin.md)
+Let's create a WordPress plugin to implement the examples proposed in this workshop. [More](./src/docs/create-wordpress-plugin.md)
 
 
 ## Starting up the dev-env
