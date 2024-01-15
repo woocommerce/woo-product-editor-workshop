@@ -113,4 +113,4 @@ function custom_sale_label_flash( $text ) {
     return '<span class="onsale custom-onsale">' . $text . '</span>';
 }
 
-add_filter('woocommerce_sale_flash', 'custom_sale_label_flash');
+add_filter('woocommerce_sale_flash', 'custom_sale_label_flash' );
