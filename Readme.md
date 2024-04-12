@@ -1,27 +1,27 @@
 # Woo Product Editor workshop
 
-## Requirements
+Repository for the [Ready to try the new product editor?](https://europe.wordcamp.org/2024/session/ready-to-try-the-new-product-editor/) workshop of the WordCamp Europe 2024 edition.
 
-### Dev tools
 
-#### wp-dev
+## Basic Requirements
 
-```cli
-cli install -g @wordpress/dev
-```
+### (1) WordPress Development Environment
 
-#### wp-create-block
+we use [wp-env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) core tool to set up the development environment.
 
-```cli
-npm install -g @wordpress/create-script
-```
+### (2) Clone this repository
 
-## Create the WordPress plugin
+### (3) PHP, JavaScript (React) basic Knowledge
 
-Let's create a WordPress plugin to implement the examples proposed in this workshop. [More](./docs/create-wordpress-plugin.md)
+### (4) IDE/Code Editor
 
+### (5) Node or NVM (Node Version Manager) installed
 
 ## Starting up the dev-env
+
+```cli
+cd woo-product-editor-workshop
+```
 
 ```cli
 WP_ENV_PORT=88 wp-env start
@@ -29,7 +29,3 @@ WP_ENV_PORT=88 wp-env start
 
 user: `admin`
 password: `password`
-
-## Install and the new Woo Product Editor
-
-The new Product Editor of Woocommerce is available in the core plugin.
