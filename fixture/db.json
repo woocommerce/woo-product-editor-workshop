@@ -12,7 +12,7 @@
 	  { "id": "10", "name": "chicken" }
 	],
 	"cat": [
-	  { "id": "1", "kind": "Siamese", "animal_id": "1" },
+	  { "id": "1", "kind": "Siamese", "animal_id": "1", "image": "siamese.jpeg" },
 	  { "id": "5", "kind": "Bengal", "animal_id": "1" },
 	  { "id": "2", "kind": "Persian", "animal_id": "1" },
 	  { "id": "3", "kind": "Maine", "animal_id": "1" },

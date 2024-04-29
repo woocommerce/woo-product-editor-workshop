@@ -41,5 +41,5 @@ npm install json-server
 
 Start up the server
 ```cli
-npx json-server fixture/db.json --port 3000 --host localhost
+npx json-server fixture/db.json --port 3000 --host localhost --static .public
 ```
