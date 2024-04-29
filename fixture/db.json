@@ -1,0 +1,87 @@
+{
+	"animal": [
+	  { "id": "1", "name": "cat" },
+	  { "id": "2", "name": "dog" },
+	  { "id": "3", "name": "fish" },
+	  { "id": "4", "name": "bird" },
+	  { "id": "5", "name": "horse" },
+	  { "id": "6", "name": "cow" },
+	  { "id": "7", "name": "pig" },
+	  { "id": "8", "name": "sheep" },
+	  { "id": "9", "name": "goat" },
+	  { "id": "10", "name": "chicken" }
+	],
+	"cat": [
+	  { "id": "1", "kind": "Siamese", "animal_id": "1" },
+	  { "id": "5", "kind": "Bengal", "animal_id": "1" },
+	  { "id": "2", "kind": "Persian", "animal_id": "1" },
+	  { "id": "3", "kind": "Maine", "animal_id": "1" },
+	  { "id": "4", "kind": "Ragdoll", "animal_id": "1" },
+	  { "id": "3", "kind": "Maine Coon", "animal_id": "1" },
+	  { "id": "5", "kind": "Bengal", "animal_id": "1" }
+	],
+	"dog": [
+	  { "id": "1", "kind": "Labrador Retriever", "animal_id": "2" },
+	  { "id": "2", "kind": "German Shepherd", "animal_id": "2" },
+	  { "id": "3", "kind": "Golden Retriever", "animal_id": "2" },
+	  { "id": "4", "kind": "French Bulldog", "animal_id": "2" },
+	  { "id": "5", "kind": "Beagle", "animal_id": "2" }
+	],
+	"fish": [
+	  { "id": "1", "kind": "Goldfish", "animal_id": "3" },
+	  { "id": "2", "kind": "Betta", "animal_id": "3" },
+	  { "id": "3", "kind": "Guppy", "animal_id": "3" },
+	  { "id": "4", "kind": "Cichlid", "animal_id": "3" },
+	  { "id": "5", "kind": "Clownfish", "animal_id": "3" }
+	],
+	"bird": [
+	  { "id": "1", "kind": "Parrot", "animal_id": "4" },
+	  { "id": "2", "kind": "Canary", "animal_id": "4" },
+	  { "id": "3", "kind": "Finch", "animal_id": "4" },
+	  { "id": "4", "kind": "Cockatiel", "animal_id": "4" },
+	  { "id": "5", "kind": "Macaw", "animal_id": "4" }
+	],
+	"horse": [
+	  { "id": "1", "kind": "Arabian", "animal_id": "5" },
+	  { "id": "2", "kind": "Thoroughbred", "animal_id": "5" },
+	  { "id": "3", "kind": "Quarter Horse", "animal_id": "5" },
+	  { "id": "4", "kind": "Paint Horse", "animal_id": "5" },
+	  { "id": "5", "kind": "Appaloosa", "animal_id": "5" }
+	],
+	"cow": [
+	  { "id": "1", "kind": "Holstein", "animal_id": "6" },
+	  { "id": "2", "kind": "Angus", "animal_id": "6" },
+	  { "id": "3", "kind": "Jersey", "animal_id": "6" },
+	  { "id": "4", "kind": "Hereford", "animal_id": "6" },
+	  { "id": "5", "kind": "Simmental", "animal_id": "6" }
+	],
+	"pig": [
+	  { "id": "1", "kind": "Berkshire", "animal_id": "7" },
+	  { "id": "2", "kind": "Yorkshire", "animal_id": "7" },
+	  { "id": "3", "kind": "Duroc", "animal_id": "7" },
+	  { "id": "4", "kind": "Hampshire", "animal_id": "7" },
+	  { "id": "5", "kind": "Landrace", "animal_id": "7" }
+	],
+	"sheep": [
+	  { "id": "1", "kind": "Merino", "animal_id": "8" },
+	  { "id": "2", "kind": "Suffolk", "animal_id": "8" },
+	  { "id": "3", "kind": "Dorper", "animal_id": "8" },
+	  { "id": "4", "kind": "Texel", "animal_id": "8" },
+	  { "id": "5", "kind": "Shetland", "animal_id": "8" }
+	],
+	"goat": [
+	  { "id": "1", "kind": "Boer", "animal_id": "9" },
+	  { "id": "2", "kind": "Nubian", "animal_id": "9" },
+	  { "id": "3", "kind": "Alpine", "animal_id": "9" },
+	  { "id": "4", "kind": "Toggenburg", "animal_id": "9" },
+	  { "id": "5", "kind": "LaMancha", "animal_id": "9" }
+	],
+	"chicken": [
+	  { "id": "1", "kind": "Rhode Island Red", "animal_id": "10" },
+	  { "id": "2", "kind": "Plymouth Rock", "animal_id": "10" },
+	  { "id": "3", "kind": "Leghorn", "animal_id": "10" },
+	  { "id": "4", "kind": "Sussex", "animal_id": "10" },
+	  { "id": "5", "kind": "Araucana", "animal_id": "10" }
+	]
+}
+  
