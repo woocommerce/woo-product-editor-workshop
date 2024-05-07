@@ -6,6 +6,7 @@ import { useWooBlockProps } from '@woocommerce/block-templates';
 import { createElement, useState } from '@wordpress/element';
 import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
 import { ComboboxControl } from '@wordpress/components';
+import { useEntityProp } from '@wordpress/core-data';
 
 const options = [
     {
@@ -34,15 +35,30 @@ export function Edit( { attributes, context }: { attributes: BlockAttributes, co
 		postType: context.postType,
 		fallbackValue: '',
 	} );
+	const [ tags, setTags ] = useEntityProp( 'postType', context.postType, 'tags' );
 	
 	const blockProps = useWooBlockProps( attributes );
     const [ filteredOptions, setFilteredOptions ] = useState( options );
+
+	const onAnimalSelection = ( value: string ) => {
+		setAnimalType( value );
+		const option = filteredOptions.find( opt => opt.value === value );
+		if ( option ) {
+			setTags([
+				...( tags.filter( tag => ! tag.slug.startsWith('animal_type_') ) ),
+				{
+					name: option?.label,
+					slug: 'animal_type_' + option.value
+				}
+			]);
+		}
+	}
     
 	return <div { ...blockProps }>
 		<ComboboxControl
             label="Animal type"
             value={ animalType }
-            onChange={ setAnimalType }
+            onChange={ onAnimalSelection }
             options={ filteredOptions }
             onFilterValueChange={ ( inputValue ) =>
                 setFilteredOptions(
