@@ -4,20 +4,21 @@
 import type { BlockAttributes } from '@wordpress/blocks';
 import { useWooBlockProps } from '@woocommerce/block-templates';
 import { createElement, useState } from '@wordpress/element';
+import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
 import { ComboboxControl } from '@wordpress/components';
 
 const options = [
     {
-        value: 'small',
-        label: 'Small',
+        value: 'dog',
+        label: 'Dog',
     },
     {
-        value: 'normal',
-        label: 'Normal',
+        value: 'cat',
+        label: 'Cat',
     },
     {
-        value: 'large',
-        label: 'Large',
+        value: 'bird',
+        label: 'Bird',
     },
 ];
 
@@ -28,15 +29,13 @@ const options = [
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
  *
  */
-export function Edit( { attributes }: { attributes: BlockAttributes } ) {
-	/**
-	 * React hook that is used to mark the block wrapper element.
-	 * It provides all the necessary props like the class name.
-	 *
-	 * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
-	 */
+export function Edit( { attributes, context }: { attributes: BlockAttributes, context: { postType: string } } ) {
+	const [ animalType, setAnimalType ] = useProductEntityProp< string >( 'meta_data.animal_type', {
+		postType: context.postType,
+		fallbackValue: '',
+	} );
+	
 	const blockProps = useWooBlockProps( attributes );
-	const [ animalType, setAnimalType ] = useState();
     const [ filteredOptions, setFilteredOptions ] = useState( options );
     
 	return <div { ...blockProps }>
@@ -57,3 +56,4 @@ export function Edit( { attributes }: { attributes: BlockAttributes } ) {
         />
 	</div>;
 }
+
