@@ -3,7 +3,23 @@
  */
 import type { BlockAttributes } from '@wordpress/blocks';
 import { useWooBlockProps } from '@woocommerce/block-templates';
-import { createElement } from '@wordpress/element';
+import { createElement, useState } from '@wordpress/element';
+import { ComboboxControl } from '@wordpress/components';
+
+const options = [
+    {
+        value: 'small',
+        label: 'Small',
+    },
+    {
+        value: 'normal',
+        label: 'Normal',
+    },
+    {
+        value: 'large',
+        label: 'Large',
+    },
+];
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -20,5 +36,24 @@ export function Edit( { attributes }: { attributes: BlockAttributes } ) {
 	 * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
 	 */
 	const blockProps = useWooBlockProps( attributes );
-	return <div { ...blockProps }>{ attributes.message }</div>;
+	const [ animalType, setAnimalType ] = useState();
+    const [ filteredOptions, setFilteredOptions ] = useState( options );
+    
+	return <div { ...blockProps }>
+		<ComboboxControl
+            label="Animal type"
+            value={ animalType }
+            onChange={ setAnimalType }
+            options={ filteredOptions }
+            onFilterValueChange={ ( inputValue ) =>
+                setFilteredOptions(
+                    options.filter( ( option ) =>
+                        option.label
+                            .toLowerCase()
+                            .startsWith( inputValue.toLowerCase() )
+                    )
+                )
+            }
+        />
+	</div>;
 }
