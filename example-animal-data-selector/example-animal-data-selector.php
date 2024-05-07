@@ -35,10 +35,19 @@ add_action( 'init', 'wordcamp_example_animal_data_selector_block_init' );
 
 function wordcamp_example_animal_data_selector_add_block_to_product_editor( BlockTemplateInterface $template ) {
 	if ( $template instanceof ProductFormTemplateInterface && 'simple-product' === $template->get_id() ) {
-		$basic_details = $template->get_section_by_id( 'basic-details' );
+		$general = $template->get_group_by_id( 'general' );
 
-		if ( $basic_details ) {
-			$basic_details->add_block(
+		if ( $general ) {
+			$animal_details = $general->add_section(
+				array(
+					'id'         => 'animal-details',
+					'order'      => 15,
+					'attributes' => array(
+						'title' => __( 'Animal Details', 'woocommerce' ),
+					),
+				)
+			);
+			$animal_details->add_block(
 				[
 					'id' 	     => 'wordcamp-example-animal-data-selector',
 					'order'	     => 40,
