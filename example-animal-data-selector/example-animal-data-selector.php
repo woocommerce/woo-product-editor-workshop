@@ -28,7 +28,7 @@ use Automattic\WooCommerce\Admin\Features\ProductBlockEditor\BlockRegistry;
  */
 function wordcamp_example_animal_data_selector_block_init() {
 	if ( isset( $_GET['page'] ) && $_GET['page'] === 'wc-admin' ) {
-		BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build' );
+		BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-data-selector' );
 	}
 }
 add_action( 'init', 'wordcamp_example_animal_data_selector_block_init' );
