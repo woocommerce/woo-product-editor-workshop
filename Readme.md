@@ -142,3 +142,54 @@ if ( $general ) {
     ```
     - Replace the `onChange` function with `onAnimalSelection`
 
+#### Step 6
+
+- Move block to its own directory, creating: `src/blocks/animal-breed`
+- Move `block.json`, `edit.tsx`, `editor.scss`, and `index.ts` to  `src/blocks/animal-breed`
+- Update `register_block_type_from_metadata( __DIR__ . '/build' );` to `register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-data-selector' );`
+- Run `npx @wordpress/create-block --template @woocommerce/create-product-editor-block --no-plugin` within `src/blocks`
+- Add `BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-breed' );` ( new block )
+- Update template by adding:
+```php
+$animal_details->add_block(
+	[
+		'id' 	     => 'wordcamp-example-animal-breed-selector',
+		'order'	     => 40,
+		'blockName'  => 'wordcamp/animal-breed',
+		'attributes' => [
+			'message' => 'Example Animal Data Selector',
+		]
+	]
+);
+```
+
+#### Step 7
+
+Use re-useable blocks.
+- Add animal age block:
+```php
+$animal_details->add_block(
+	[
+		'id' 	     => 'wordcamp-example-animal-age',
+		'order'	     => 40,
+		'blockName'  => 'woocommerce/product-number-field',
+		'attributes' => [
+			'label' => 'Animal age',
+			'property' => 'meta_data.animal_age',
+			'suffix' => 'Yrs',
+			'placeholder' => 'Age of animal',
+			'required' => true,
+			'min' => 1,
+			'max' => 20
+		],
+	]
+);
+```
+- Add hide condition:
+```php
+'hideConditions' => array(
+	array(
+		'expression' => 'editedProduct.meta_data.animal_type === undefined || editedProduct.meta_data.animal_type === null',
+	),
+),
+```
