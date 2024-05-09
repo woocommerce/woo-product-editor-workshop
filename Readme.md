@@ -142,3 +142,23 @@ if ( $general ) {
     ```
     - Replace the `onChange` function with `onAnimalSelection`
 
+#### Step 6
+
+- Move block to its own directory, creating: `src/blocks/animal-breed`
+- Move `block.json`, `edit.tsx`, `editor.scss`, and `index.ts` to  `src/blocks/animal-breed`
+- Update `register_block_type_from_metadata( __DIR__ . '/build' );` to `register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-data-selector' );`
+- Run `npx @wordpress/create-block --template @woocommerce/create-product-editor-block --no-plugin` within `src/blocks`
+- Add `BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-breed' );` ( new block )
+- Update template by adding:
+```php
+$animal_details->add_block(
+	[
+		'id' 	     => 'wordcamp-example-animal-breed-selector',
+		'order'	     => 40,
+		'blockName'  => 'wordcamp/animal-breed',
+		'attributes' => [
+			'message' => 'Example Animal Data Selector',
+		]
+	]
+);
+```

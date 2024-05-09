@@ -29,6 +29,7 @@ use Automattic\WooCommerce\Admin\Features\ProductBlockEditor\BlockRegistry;
 function wordcamp_example_animal_data_selector_block_init() {
 	if ( isset( $_GET['page'] ) && $_GET['page'] === 'wc-admin' ) {
 		BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-data-selector' );
+		BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-breed' );
 	}
 }
 add_action( 'init', 'wordcamp_example_animal_data_selector_block_init' );
@@ -52,6 +53,16 @@ function wordcamp_example_animal_data_selector_add_block_to_product_editor( Bloc
 					'id' 	     => 'wordcamp-example-animal-data-selector',
 					'order'	     => 40,
 					'blockName'  => 'wordcamp/example-animal-data-selector',
+					'attributes' => [
+						'message' => 'Example Animal Data Selector',
+					]
+				]
+			);
+			$animal_details->add_block(
+				[
+					'id' 	     => 'wordcamp-example-animal-breed-selector',
+					'order'	     => 40,
+					'blockName'  => 'wordcamp/animal-breed',
 					'attributes' => [
 						'message' => 'Example Animal Data Selector',
 					]
