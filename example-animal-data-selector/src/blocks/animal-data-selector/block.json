@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wordcamp/example-animal-data-selector",
+	"version": "0.1.0",
+	"title": "Example Animal Data Selector",
+	"category": "widgets",
+	"icon": "flag",
+	"description": "A block to demonstrate extending the Product Editor",
+	"attributes": {
+		"message": {
+			"type": "string",
+			"__experimentalRole": "content",
+			"source": "text",
+			"selector": "div"
+		}
+	},
+	"usesContext": [ "postType" ],
+	"supports": {
+		"html": false,
+		"inserter": false
+	},
+	"textdomain": "example-animal-data-selector",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

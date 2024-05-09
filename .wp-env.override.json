@@ -2,7 +2,8 @@
 	"phpVersion": "8.2",
 	"plugins": [
 		"https://github.com/woocommerce/woocommerce/releases/download/nightly/woocommerce-trunk-nightly.zip",
-		"https://github.com/woocommerce/woocommerce/releases/download/wc-beta-tester-2.3.0/woocommerce-beta-tester.zip"
+		"https://github.com/woocommerce/woocommerce/releases/download/wc-beta-tester-2.3.0/woocommerce-beta-tester.zip",
+		"./example-animal-data-selector"
 	],
 	"port": 8888,
 	"config": {
