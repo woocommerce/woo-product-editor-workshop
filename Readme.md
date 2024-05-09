@@ -193,3 +193,29 @@ $animal_details->add_block(
 	),
 ),
 ```
+
+#### Step 8
+
+Add editor block to specifically render the animal information.
+- Run `npx @wordpress/create-block --no-plugin` within `src/blocks`
+- Add `register_block_type( __DIR__ . '/build/blocks/animal-info');` ( new block )
+- Add `"usesContext": [ "postId" ],` to `block.json`
+- Update the `render.php` file and add:
+```php
+$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : '';
+$product = wc_get_product( $post_id );
+
+if ( ! $product ) {
+	return '';
+}
+
+$animal_type = get_post_meta( $post_id, 'animal_type', true );
+$animal_age = get_post_meta( $post_id, 'animal_age', true );
+?>
+<h3>Animal Info:</h3>
+<p>
+<?php esc_html_e( 'Type', 'animal-info' ); ?>: <?php echo $animal_type ?><br/>
+<?php esc_html_e( 'Age', 'animal-info' ); ?>: <?php echo $animal_age ?><br/>
+</p>
+```
+- Use the new animal info block within the Site Editor `Single Product` template.

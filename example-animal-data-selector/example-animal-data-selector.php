@@ -31,6 +31,7 @@ function wordcamp_example_animal_data_selector_block_init() {
 		BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-data-selector' );
 		BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-breed' );
 	}
+	register_block_type( __DIR__ . '/build/blocks/animal-info');
 }
 add_action( 'init', 'wordcamp_example_animal_data_selector_block_init' );
 
