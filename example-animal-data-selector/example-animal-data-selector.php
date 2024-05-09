@@ -68,6 +68,27 @@ function wordcamp_example_animal_data_selector_add_block_to_product_editor( Bloc
 					]
 				]
 			);
+			$animal_details->add_block(
+				[
+					'id' 	     => 'wordcamp-example-animal-age',
+					'order'	     => 40,
+					'blockName'  => 'woocommerce/product-number-field',
+					'attributes' => [
+						'label' => 'Animal age',
+						'property' => 'meta_data.animal_age',
+						'suffix' => 'Yrs',
+						'placeholder' => 'Age of animal',
+						'required' => true,
+						'min' => 1,
+						'max' => 20
+					],
+					'hideConditions' => array(
+						array(
+							'expression' => 'editedProduct.meta_data.animal_type === undefined || editedProduct.meta_data.animal_type === null',
+						),
+					),
+				]
+			);
 		}
 	}
 }
