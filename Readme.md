@@ -239,3 +239,48 @@ Create a `.eslintrc` file to finish the dev-env setup
     "extends": [ "plugin:@wordpress/eslint-plugin/recommended" ]
 }
 ```
+
+#### Step 10: Extending blocks
+
+Import [@wordpress/compose](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-compose/) package.
+
+```sh
+npm i -s @wordpress/compose
+```
+
+Create with `withAnimalToTheRescue` HOC:
+
+```jsx
+const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
+	return ( props ) => {
+		const { name, attributes } = props;
+
+		const { _templateBlockId } = attributes;
+
+		if ( name !== 'woocommerce/product-summary-field' ) {
+			return <BlockEdit { ...props } />;
+		}
+
+		if ( _templateBlockId !== 'product-description__content' ) {
+			return <BlockEdit { ...props } />;
+		}
+
+		return (
+			<>
+				<div>Extending...</div>
+				<BlockEdit { ...props } />
+			</>
+		);
+	};
+}, 'withAnimalToTheRescue' );
+```
+
+Filter the blocks
+
+```js
+addFilter(
+	'editor.BlockEdit',
+	'example-animal-data-selector/extend-block-description',
+	withAnimalToTheRescue
+);
+```
