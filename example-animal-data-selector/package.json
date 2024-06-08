@@ -28,5 +28,8 @@
 		"@wordpress/scripts": "^27.8.0",
 		"@wordpress/stylelint-config": "^21.40.0",
 		"eslint-import-resolver-typescript": "^3.6.1"
+	},
+	"dependencies": {
+		"@woocommerce/block-templates": "^1.1.0"
 	}
 }
