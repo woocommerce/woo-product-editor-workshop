@@ -8,6 +8,7 @@ import { BlockConfiguration, registerBlockType } from '@wordpress/blocks';
  */
 import { AnimalSelectorBlockEdit } from './edit';
 import metadata from './block.json';
+import './extend';
 import './editor.scss';
 
 /**
