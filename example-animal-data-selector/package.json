@@ -33,7 +33,6 @@
 		"eslint-import-resolver-typescript": "^3.6.1"
 	},
 	"dependencies": {
-		"@woocommerce/block-templates": "^1.1.0",
-		"@wordpress/compose": "^7.0.0"
+		"@woocommerce/block-templates": "^1.1.0"
 	}
 }
