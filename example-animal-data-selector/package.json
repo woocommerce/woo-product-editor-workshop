@@ -29,5 +29,8 @@
 		"@wordpress/stylelint-config": "^21.40.0",
 		"ajv": "^8.16.0",
 		"eslint-import-resolver-typescript": "^3.6.1"
+	},
+	"dependencies": {
+		"@woocommerce/block-templates": "^1.1.0"
 	}
 }
