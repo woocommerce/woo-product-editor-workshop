@@ -10,7 +10,6 @@ import { createElement } from '@wordpress/element';
  * editor. This represents what the editor will render when the block is used.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
  */
 export function Edit( { attributes }: { attributes: BlockAttributes } ) {
 	/**
@@ -19,6 +18,6 @@ export function Edit( { attributes }: { attributes: BlockAttributes } ) {
 	 *
 	 * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
 	 */
-	const blockProps = useWooBlockProps(attributes);
+	const blockProps = useWooBlockProps( attributes );
 	return <div { ...blockProps }>{ attributes.message }</div>;
 }
