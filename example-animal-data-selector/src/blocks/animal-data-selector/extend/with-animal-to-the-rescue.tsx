@@ -6,11 +6,45 @@ import { __ } from '@wordpress/i18n';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { Button, Icon } from '@wordpress/components';
 import { bug } from '@wordpress/icons';
-import { __experimentalSectionActions as SectionActions } from '@woocommerce/product-editor';
+import {
+	__experimentalSectionActions as SectionActions,
+	__experimentalUseProductEntityProp as useProductEntityProp,
+} from '@woocommerce/product-editor';
+
+type AnimalToTheRescueButtonProps = {
+	onAnimalSuggestion?: () => void;
+	context: {
+		postType: string;
+	};
+};
+
+const AnimalToTheRescueButton = ( {
+	onAnimalSuggestion = () => {},
+	context,
+}: AnimalToTheRescueButtonProps ) => {
+	const [ animalType ] = useProductEntityProp< string >(
+		'meta_data.animal_type',
+		{
+			postType: context.postType,
+			fallbackValue: '',
+		}
+	);
+
+	return (
+		<Button
+			variant="secondary"
+			icon={ <Icon icon={ bug } /> }
+			onClick={ onAnimalSuggestion }
+			disabled={ animalType === '' }
+		>
+			{ __( 'Animal to the rescue!', 'example-animal-data-selector' ) }
+		</Button>
+	);
+};
 
 const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
-		const { name, attributes } = props;
+		const { name, attributes, context } = props;
 
 		const { _templateBlockId } = attributes;
 
@@ -27,22 +61,7 @@ const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 		return (
 			<>
 				<SectionActions>
-					<Button
-						icon={ <Icon icon={ bug } /> }
-						onClick={ () => {
-							console.log(
-								__(
-									'Animal to the rescue!',
-									'example-animal-data-selector'
-								)
-							);
-						} }
-					>
-						{ __(
-							'Animal to the rescue!',
-							'example-animal-data-selector'
-						) }
-					</Button>
+					<AnimalToTheRescueButton context={ context } />
 				</SectionActions>
 
 				<BlockEdit { ...props } />
