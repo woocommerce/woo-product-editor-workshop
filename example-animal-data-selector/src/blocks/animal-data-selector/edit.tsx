@@ -1,12 +1,12 @@
 /**
  * External dependencies
  */
-import type { BlockAttributes } from '@wordpress/blocks';
 import { useWooBlockProps } from '@woocommerce/block-templates';
 import { createElement, useState } from '@wordpress/element';
 import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
 import { ComboboxControl } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
+import type { BlockAttributes } from '@wordpress/blocks';
 
 const options = [
 	{
@@ -23,18 +23,12 @@ const options = [
 	},
 ];
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- */
-export function Edit( {
+export function AnimalSelectorBlockEdit( {
 	attributes,
-	context,
+	context = { postType: 'product' },
 }: {
 	attributes: BlockAttributes;
-	context: { postType: string };
+	context?: { postType: 'post' | 'page' | 'product' | string };
 } ) {
 	const [ animalType, setAnimalType ] = useProductEntityProp< string >(
 		'meta_data.animal_type',
@@ -43,6 +37,7 @@ export function Edit( {
 			fallbackValue: '',
 		}
 	);
+
 	const [ tags, setTags ] = useEntityProp(
 		'postType',
 		context.postType,

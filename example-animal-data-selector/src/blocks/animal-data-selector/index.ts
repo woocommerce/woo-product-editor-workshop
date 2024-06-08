@@ -6,13 +6,9 @@ import { BlockConfiguration, registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import './editor.scss'; // see https://www.npmjs.com/package/@wordpress/scripts#using-css
-
-/**
- * Internal dependencies
- */
-import { Edit } from './edit';
+import { AnimalSelectorBlockEdit } from './edit';
 import metadata from './block.json';
+import './editor.scss';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -23,5 +19,5 @@ registerBlockType( metadata as BlockConfiguration, {
 	/**
 	 * @see ./edit.js
 	 */
-	edit: Edit,
+	edit: AnimalSelectorBlockEdit,
 } );
