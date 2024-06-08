@@ -219,3 +219,23 @@ $animal_age = get_post_meta( $post_id, 'animal_age', true );
 </p>
 ```
 - Use the new animal info block within the Site Editor `Single Product` template.
+
+#### Step 9: Eslint + Prettier
+
+Install (saving) the dev packages dependencies:
+
+```sh
+npm install --save-dev @wordpress/prettier-config
+```
+
+```sh
+npm install --save-dev @wordpress/eslint-plugin
+```
+
+Create a `.eslintrc` file to finish the dev-env setup
+
+```
+{
+    "extends": [ "plugin:@wordpress/eslint-plugin/recommended" ]
+}
+```
