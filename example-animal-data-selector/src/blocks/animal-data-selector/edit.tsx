@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import { useWooBlockProps } from '@woocommerce/block-templates';
 import { createElement, useState } from '@wordpress/element';
 import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
