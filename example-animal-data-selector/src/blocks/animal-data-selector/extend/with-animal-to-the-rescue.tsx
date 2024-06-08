@@ -4,6 +4,7 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 import { createHigherOrderComponent } from '@wordpress/compose';
+import { useEntityProp } from '@wordpress/core-data';
 import { Button, Icon } from '@wordpress/components';
 import { bug } from '@wordpress/icons';
 import {
@@ -26,7 +27,6 @@ type AnimalToTheRescueButtonProps = {
 };
 
 const AnimalToTheRescueButton = ( {
-	onAnimalSuggestion = () => {},
 	context,
 }: AnimalToTheRescueButtonProps ) => {
 	const [ animalType ] = useProductEntityProp< string >(
@@ -37,13 +37,19 @@ const AnimalToTheRescueButton = ( {
 		}
 	) as unknown as [ AnimalTypeProp ];
 
+	const [ , setDescription ] = useEntityProp(
+		'postType',
+		'product',
+		'description'
+	);
+
 	function prepareAnimalSuggestion() {
 		const suggestion = getAnimalDescriptionByType( animalType );
 		if ( ! suggestion ) {
 			return;
 		}
 
-		onAnimalSuggestion( suggestion );
+		setDescription( suggestion );
 	}
 
 	return (
@@ -77,10 +83,7 @@ const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 		return (
 			<>
 				<SectionActions>
-					<AnimalToTheRescueButton
-						context={ context }
-						onAnimalSuggestion={ console.log }
-					/>
+					<AnimalToTheRescueButton context={ context } />
 				</SectionActions>
 
 				<BlockEdit { ...props } />
