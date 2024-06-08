@@ -11,8 +11,15 @@ import {
 	__experimentalUseProductEntityProp as useProductEntityProp,
 } from '@woocommerce/product-editor';
 
+/**
+ * Internal dependencies
+ */
+import { getAnimalDescriptionByType } from '../edit';
+
+type AnimalTypeProp = 'dog' | 'cat' | 'bird';
+
 type AnimalToTheRescueButtonProps = {
-	onAnimalSuggestion?: () => void;
+	onAnimalSuggestion?: ( suggestion: string ) => void;
 	context: {
 		postType: string;
 	};
@@ -28,14 +35,23 @@ const AnimalToTheRescueButton = ( {
 			postType: context.postType,
 			fallbackValue: '',
 		}
-	);
+	) as unknown as [ AnimalTypeProp ];
+
+	function prepareAnimalSuggestion() {
+		const suggestion = getAnimalDescriptionByType( animalType );
+		if ( ! suggestion ) {
+			return;
+		}
+
+		onAnimalSuggestion( suggestion );
+	}
 
 	return (
 		<Button
 			variant="secondary"
 			icon={ <Icon icon={ bug } /> }
-			onClick={ onAnimalSuggestion }
-			disabled={ animalType === '' }
+			onClick={ prepareAnimalSuggestion }
+			disabled={ ! animalType }
 		>
 			{ __( 'Animal to the rescue!', 'example-animal-data-selector' ) }
 		</Button>
@@ -61,7 +77,10 @@ const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 		return (
 			<>
 				<SectionActions>
-					<AnimalToTheRescueButton context={ context } />
+					<AnimalToTheRescueButton
+						context={ context }
+						onAnimalSuggestion={ console.log }
+					/>
 				</SectionActions>
 
 				<BlockEdit { ...props } />

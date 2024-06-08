@@ -24,6 +24,22 @@ const options = [
 	},
 ];
 
+export function getAnimalDescriptionByType(
+	type: 'dog' | 'cat' | 'bird'
+): string | undefined {
+	if ( type === 'dog' ) {
+		return 'Woof! Woof!';
+	}
+
+	if ( type === 'cat' ) {
+		return 'Meow! Meow!';
+	}
+
+	if ( type === 'bird' ) {
+		return 'Tweet! Tweet!';
+	}
+}
+
 export function AnimalSelectorBlockEdit( {
 	attributes,
 	context = { postType: 'product' },
