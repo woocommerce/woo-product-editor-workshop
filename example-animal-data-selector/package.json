@@ -35,6 +35,7 @@
 	"dependencies": {
 		"@woocommerce/block-templates": "^1.1.0",
 		"@wordpress/components": "^28.0.0",
+		"@wordpress/core-data": "^7.0.0",
 		"@wordpress/icons": "^10.0.0"
 	}
 }
