@@ -47,7 +47,10 @@ export function Edit( {
 		'postType',
 		context.postType,
 		'tags'
-	);
+	) as unknown as [
+		{ name: string; slug: string }[],
+		( tags: { name: string; slug: string }[] ) => void,
+	];
 
 	const blockProps = useWooBlockProps( attributes );
 	const [ filteredOptions, setFilteredOptions ] = useState( options );
