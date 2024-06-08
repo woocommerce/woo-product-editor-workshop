@@ -55,7 +55,11 @@ export function Edit( {
 	const blockProps = useWooBlockProps( attributes );
 	const [ filteredOptions, setFilteredOptions ] = useState( options );
 
-	const onAnimalSelection = ( value: string ) => {
+	const onAnimalSelection = ( value: string | null | undefined ) => {
+		if ( ! value ) {
+			return;
+		}
+
 		setAnimalType( value );
 		const option = filteredOptions.find( ( opt ) => opt.value === value );
 		if ( option ) {
