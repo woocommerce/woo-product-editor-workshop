@@ -30,21 +30,6 @@ WP_ENV_PORT=88 wp-env start
 user: `admin`
 password: `password`
 
-
-## Start the REST API server
-
-Install [json-server](https://github.com/typicode/json-server) app:
-
-```cli
-npm install json-server
-```
-
-Start up the server
-```cli
-npx json-server fixture/db.json --port 3000 --host localhost --static .public
-```
-
-
 ## Steps
 
 #### Step 1 
