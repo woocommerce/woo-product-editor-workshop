@@ -43,7 +43,8 @@ function wordcamp_example_animal_data_selector_add_block_to_product_editor( Bloc
 					'id'         => 'animal-details',
 					'order'      => 15,
 					'attributes' => array(
-						'title' => __( 'Animal Details', 'woocommerce' ),
+						'title'       => __( 'Animal Details', 'woocommerce' ),
+						'description' => __( 'Add details about the animal', 'woocommerce' ),
 					),
 				)
 			);
