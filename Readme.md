@@ -166,15 +166,16 @@ const options = [
 ```
 
 - Add `postType` context by adding `"usesContext": [ "postType" ],` to the `block.json`
-- Save `animalType` as meta data:
-  - Add import:
+
+#### Save `animalType` as meta data:
+- Add import:
 ```
 import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
 ```
-  - Using the `postType` from the context add this line within the Edit function:
+- Using the `postType` from the context add this line within the Edit function:
 
 ```javascript
-	const [ animalType, setAnimalType ] = useProductEntityProp< string >( 'meta_data.animal_type', {
+const [ animalType, setAnimalType ] = useProductEntityProp< string >( 'meta_data.animal_type', {
 	postType: context.postType,
 	fallbackValue: '',
 } );
@@ -182,26 +183,35 @@ import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woo
 
 ### Step 5
 
-- Update tags with animal type:
-     - Add import: `import { useEntityProp } from '@wordpress/core-data';`
-     - Add tags to Edit function: `const [ tags, setTags ] = useEntityProp( 'postType', context.postType, 'tags' );`
-     - Add:
-    ```javascript
-    const onAnimalSelection = ( value: string ) => {
-		setAnimalType( value );
-		const option = filteredOptions.find( opt => opt.value === value );
-		if ( option ) {
-			setTags([
-				...( tags.filter( tag => ! tag.slug.startsWith('animal_type_') ) ),
-				{
-					name: option?.label,
-					slug: 'animal_type_' + option.value
-				}
-			]);
-		}
+#### Update tags with animal type:
+- Add import:
+  
+```js
+import { useEntityProp } from '@wordpress/core-data';
+```
+ - Add tags to Edit function:
+	
+```js
+const [ tags, setTags ] = useEntityProp( 'postType', context.postType, 'tags' );
+```
+- Add:
+
+```javascript
+const onAnimalSelection = ( value: string ) => {
+	setAnimalType( value );
+	const option = filteredOptions.find( opt => opt.value === value );
+	if ( option ) {
+		setTags([
+			...( tags.filter( tag => ! tag.slug.startsWith('animal_type_') ) ),
+			{
+				name: option?.label,
+				slug: 'animal_type_' + option.value
+			}
+		]);
 	}
-    ```
-    - Replace the `onChange` function with `onAnimalSelection`
+}
+```
+- Replace the `onChange` function with `onAnimalSelection`
 
 ### Step 6
 
