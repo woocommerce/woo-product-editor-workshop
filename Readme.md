@@ -291,54 +291,37 @@ $animal_age = get_post_meta( $post_id, 'animal_age', true );
 ```
 - Use the new animal info block within the Site Editor `Single Product` template.
 
-### Step 9: Eslint + Prettier
+#### Step 9: Extending blocks
 
-Install (saving) the dev packages dependencies:
-
-```sh
-npm install --save-dev @wordpress/prettier-config
-```
+Create and import a new `extend/index.tsx` file
 
 ```sh
-npm install --save-dev @wordpress/eslint-plugin
+code src/blocks/animal-data-selector/extend/index.tsx
 ```
 
-Create a `.eslintrc` file to finish the dev-env setup
-
-```
-{
-    "extends": [ "plugin:@wordpress/eslint-plugin/recommended" ]
-}
+```ts
+import './extend';
 ```
 
-#### Step 10: Extending blocks
+1. Import relevant functions
 
-Import [@wordpress/compose](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-compose/) package.
-
-```sh
-npm i -s @wordpress/compose
+```js
+/**
+ * External dependencies
+ */
+import { createHigherOrderComponent } from '@wordpress/compose';
+import { addFilter } from '@wordpress/hooks';
+import { Icon, bug } from '@wordpress/icons';
 ```
 
-Create with `withAnimalToTheRescue` HOC:
+2. Create with `withAnimalToTheRescue` HOC:
 
-```jsx
+```tsx
 const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
-		const { name, attributes } = props;
-
-		const { _templateBlockId } = attributes;
-
-		if ( name !== 'woocommerce/product-summary-field' ) {
-			return <BlockEdit { ...props } />;
-		}
-
-		if ( _templateBlockId !== 'product-description__content' ) {
-			return <BlockEdit { ...props } />;
-		}
-
 		return (
 			<>
-				<div>Extending...</div>
+				<h1>🐶 Animal!</h1>
 				<BlockEdit { ...props } />
 			</>
 		);
@@ -346,12 +329,99 @@ const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 }, 'withAnimalToTheRescue' );
 ```
 
-Filter the blocks
+3. Filter the block instance
 
-```js
+```tsx
 addFilter(
 	'editor.BlockEdit',
-	'example-animal-data-selector/extend-block-description',
+	'example-animal-data-selector/extend/with-animal-to-the-rescue',
 	withAnimalToTheRescue
 );
+```
+
+4. Extend the specific block instance
+
+```tsx
+const { name, attributes } = props;
+
+const { _templateBlockId } = attributes;
+
+if ( name !== 'woocommerce/product-summary-field' ) {
+	return <BlockEdit { ...props } />;
+}
+
+if ( _templateBlockId !== 'product-description__content' ) {
+	return <BlockEdit { ...props } />;
+}
+//...
+```
+
+5. Fill the `<SectionActions />` slot
+
+```tsx
+import { __experimentalSectionActions as SectionActions } from '@woocommerce/product-editor';
+```
+
+```tsx
+<SectionActions>
+	<h1>🐶 Animal!</h1>
+</SectionActions>
+```
+
+6. Create the SuggestionButton component
+
+```tsx
+import { Button } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+```
+
+```tsx
+function SuggestionButton() {
+	return (
+		<Button
+			variant="secondary"
+			icon={ <Icon icon={ bug } /> }
+			onClick={ console.log }
+		>
+			{ __( 'Need help with this block?', 'woocommerce' ) }
+		</Button>
+	);
+}
+```
+
+7. Load the action type, and set the product description.
+
+```tsx
+import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
+import { useEntityProp } from '@wordpress/core-data';
+```
+
+```tsx
+const [ animalType ] = useProductEntityProp< string >(
+	'meta_data.animal_type',
+	{
+		postType: 'product',
+		fallbackValue: '',
+	}
+);
+```
+
+```tsx
+const [ , setDescription ] = useEntityProp(
+	'postType',
+	'product',
+	'description'
+);
+```
+
+```tsx
+function suggestDescription() {
+	if ( ! animalType ) {
+		return;
+	}
+
+	setDescription(
+		`This product is perfect for your ${ animalType.toUpperCase() }!`
+	);
+}
 ```
