@@ -189,7 +189,7 @@ $animal_details->add_block(
 ```php
 'hideConditions' => array(
 	array(
-		'expression' => 'editedProduct.meta_data.animal_type === undefined || editedProduct.meta_data.animal_type === null',
+		'expression' => '! editedProduct.meta_data.animal_type',
 	),
 ),
 ```

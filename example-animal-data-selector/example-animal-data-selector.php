@@ -84,7 +84,7 @@ function wordcamp_example_animal_data_selector_add_block_to_product_editor( Bloc
 					],
 					'hideConditions' => array(
 						array(
-							'expression' => 'editedProduct.meta_data.animal_type === undefined || editedProduct.meta_data.animal_type === null',
+							'expression' => '! editedProduct.meta_data.animal_type',
 						),
 					),
 				]
