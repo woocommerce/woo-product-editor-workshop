@@ -103,6 +103,46 @@ if ( $general ) {
 
 - Go to Gutenberg storybook -> https://wordpress.github.io/gutenberg/?path=/docs/components-comboboxcontrol--docs
 - Copy over ComboboxControl example to the `src/edit.tsx`
+Within Edit function:
+```javascript
+const [ animalType, setAnimalType ] = useState();
+const [ filteredOptions, setFilteredOptions ] = useState( options );
+ 
+return <div { ...blockProps }>
+	<ComboboxControl
+        label="Animal type"
+        value={ animalType }
+        onChange={ setAnimalType }
+        options={ filteredOptions }
+        onFilterValueChange={ ( inputValue ) =>
+            setFilteredOptions(
+                options.filter( ( option ) =>
+                    option.label
+                        .toLowerCase()
+                        .startsWith( inputValue.toLowerCase() )
+                )
+            )
+        }
+    />
+</div>;
+```
+Outside of edit function:
+```javascript
+const options = [
+    {
+        value: 'small',
+        label: 'Small',
+    },
+    {
+        value: 'normal',
+        label: 'Normal',
+    },
+    {
+        value: 'large',
+        label: 'Large',
+    },
+];
+```
 - Remove yellow background styling in `src/editor.scss`.
 
 #### Step 4
@@ -113,8 +153,8 @@ if ( $general ) {
      - Add import: `import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';`
      - Using the `postType` from the context add this line within the Edit function:
      ```javascript
-     const [ price, setPrice ] = useProductEntityProp< string >( property, {
-		postType,
+     const [ animalType, setAnimalType ] = useProductEntityProp< string >( 'meta_data.animal_type', {
+		postType: context.postType,
 		fallbackValue: '',
 	} );
     ```
@@ -189,7 +229,7 @@ $animal_details->add_block(
 ```php
 'hideConditions' => array(
 	array(
-		'expression' => 'editedProduct.meta_data.animal_type === undefined || editedProduct.meta_data.animal_type === null',
+		'expression' => '! editedProduct.meta_data.animal_type',
 	),
 ),
 ```
