@@ -146,17 +146,39 @@ const options = [
 
 ### Step 4
 
-- Update dropdown with sample data.
+- Update dropdown with sample data
+
+```js
+const options = [
+	{
+		value: 'dog',
+		label: 'Dog',
+	},
+	{
+		value: 'cat',
+		label: 'Cat',
+	},
+	{
+		value: 'bird',
+		label: 'Bird',
+	},
+];
+```
+
 - Add `postType` context by adding `"usesContext": [ "postType" ],` to the `block.json`
 - Save `animalType` as meta data:
-     - Add import: `import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';`
-     - Using the `postType` from the context add this line within the Edit function:
-     ```javascript
-     const [ animalType, setAnimalType ] = useProductEntityProp< string >( 'meta_data.animal_type', {
-		postType: context.postType,
-		fallbackValue: '',
-	} );
-    ```
+  - Add import:
+```
+import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
+```
+  - Using the `postType` from the context add this line within the Edit function:
+
+```javascript
+	const [ animalType, setAnimalType ] = useProductEntityProp< string >( 'meta_data.animal_type', {
+	postType: context.postType,
+	fallbackValue: '',
+} );
+```
 
 ### Step 5
 
