@@ -50,7 +50,9 @@ npx json-server fixture/db.json --port 3000 --host localhost --static .public
 #### Step 1 
 
 - Create the plugin `npx @wordpress/create-block --template @woocommerce/create-product-editor-block`
-- Start wp-env 
+- Start wp-env in the main repo.
+- `cd plugin-name`
+- `npm start` ( NOTE: There is a bug with Webpack and we had to install the `ajv` package ( `npm add ajv --save-dev` ) ) 
 
 #### Step 2
 
