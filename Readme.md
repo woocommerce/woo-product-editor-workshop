@@ -32,14 +32,26 @@ password: `password`
 
 ## Steps
 
-#### Step 1 
+### Step 1 
 
-- Create the plugin `npx @wordpress/create-block --template @woocommerce/create-product-editor-block`
+- Create the plugin:
+
+```
+npx @wordpress/create-block --template @woocommerce/create-product-editor-block
+```
+
+[@woocommerce/create-product-editor-block](https://github.com/woocommerce/woocommerce/blob/trunk/packages/js/create-product-editor-block/README.md) package
+
 - Start wp-env in the main repo.
 - `cd plugin-name`
-- `npm start` ( NOTE: There is a bug with Webpack and we had to install the `ajv` package ( `npm add ajv --save-dev` ) ) 
 
-#### Step 2
+```
+npm start
+```
+
+_( NOTE: There is a bug with Webpack and we had to install the `ajv` package ( `npm add ajv --save-dev` ) )_
+
+### Step 2
 
 - Create new section in the general tab using `get_group_by_id` and `add_section`
 Changing:
@@ -86,7 +98,7 @@ if ( $general ) {
 }
 ```
 
-#### Step 3
+### Step 3
 
 - Go to Gutenberg storybook -> https://wordpress.github.io/gutenberg/?path=/docs/components-comboboxcontrol--docs
 - Copy over ComboboxControl example to the `src/edit.tsx`
@@ -132,7 +144,7 @@ const options = [
 ```
 - Remove yellow background styling in `src/editor.scss`.
 
-#### Step 4
+### Step 4
 
 - Update dropdown with sample data.
 - Add `postType` context by adding `"usesContext": [ "postType" ],` to the `block.json`
@@ -146,7 +158,7 @@ const options = [
 	} );
     ```
 
-#### Step 5
+### Step 5
 
 - Update tags with animal type:
      - Add import: `import { useEntityProp } from '@wordpress/core-data';`
@@ -169,7 +181,7 @@ const options = [
     ```
     - Replace the `onChange` function with `onAnimalSelection`
 
-#### Step 6
+### Step 6
 
 - Move block to its own directory, creating: `src/blocks/animal-breed`
 - Move `block.json`, `edit.tsx`, `editor.scss`, and `index.ts` to  `src/blocks/animal-breed`
@@ -190,7 +202,7 @@ $animal_details->add_block(
 );
 ```
 
-#### Step 7
+### Step 7
 
 Use re-useable blocks.
 - Add animal age block:
@@ -221,7 +233,7 @@ $animal_details->add_block(
 ),
 ```
 
-#### Step 8
+### Step 8
 
 Add editor block to specifically render the animal information.
 - Run `npx @wordpress/create-block --no-plugin` within `src/blocks`
@@ -247,7 +259,7 @@ $animal_age = get_post_meta( $post_id, 'animal_age', true );
 ```
 - Use the new animal info block within the Site Editor `Single Product` template.
 
-#### Step 9: Eslint + Prettier
+### Step 9: Eslint + Prettier
 
 Install (saving) the dev packages dependencies:
 
