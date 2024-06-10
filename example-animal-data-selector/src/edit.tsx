@@ -35,7 +35,7 @@ export function AnimalSelectorEdit( {
 	context = { postType: 'product' },
 }: {
 	attributes: BlockAttributes;
-	context: { postType: string };
+	context?: { postType: string };
 } ) {
 	/**
 	 * React hook that is used to mark the block wrapper element.

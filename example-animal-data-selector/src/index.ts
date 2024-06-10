@@ -11,7 +11,7 @@ import './editor.scss'; // see https://www.npmjs.com/package/@wordpress/scripts#
 /**
  * Internal dependencies
  */
-import { Edit } from './edit';
+import { AnimalSelectorEdit } from './edit';
 import metadata from './block.json';
 
 /**
@@ -23,5 +23,5 @@ registerBlockType( metadata as BlockConfiguration, {
 	/**
 	 * @see ./edit.js
 	 */
-	edit: Edit,
+	edit: AnimalSelectorEdit,
 } );
