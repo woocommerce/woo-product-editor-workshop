@@ -293,17 +293,14 @@ $animal_age = get_post_meta( $post_id, 'animal_age', true );
 
 #### Step 9: Extending blocks
 
-Create and import a new `extend/index.tsx` file
-
-```sh
-code src/blocks/animal-data-selector/extend/index.tsx
-```
+Let's put the whole extending code in its file.
+Create and import a new `extend/index.tsx` file.
 
 ```ts
 import './extend';
 ```
 
-1. Import relevant functions
+* Import relevant functions
 
 ```js
 /**
@@ -314,14 +311,14 @@ import { addFilter } from '@wordpress/hooks';
 import { Icon, bug } from '@wordpress/icons';
 ```
 
-2. Create with `withAnimalToTheRescue` HOC:
+* Create with `withAnimalToTheRescue` HOC:
 
 ```tsx
 const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
 		return (
 			<>
-				<h1>🐶 Animal!</h1>
+				<h1>🐶 knows!</h1>
 				<BlockEdit { ...props } />
 			</>
 		);
@@ -329,7 +326,7 @@ const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 }, 'withAnimalToTheRescue' );
 ```
 
-3. Filter the block instance
+* Filter the block instance
 
 ```tsx
 addFilter(
@@ -339,7 +336,7 @@ addFilter(
 );
 ```
 
-4. Extend the specific block instance
+* Extend the specific block instance
 
 ```tsx
 const { name, attributes } = props;
@@ -356,7 +353,7 @@ if ( _templateBlockId !== 'product-description__content' ) {
 //...
 ```
 
-5. Fill the `<SectionActions />` slot
+* Fill the `<SectionActions />` slot
 
 ```tsx
 import { __experimentalSectionActions as SectionActions } from '@woocommerce/product-editor';
@@ -364,11 +361,11 @@ import { __experimentalSectionActions as SectionActions } from '@woocommerce/pro
 
 ```tsx
 <SectionActions>
-	<h1>🐶 Animal!</h1>
+	<h1>🐶 knows!</h1>
 </SectionActions>
 ```
 
-6. Create the SuggestionButton component
+* Create the SuggestionButton component
 
 ```tsx
 import { Button } from '@wordpress/components';
@@ -389,7 +386,7 @@ function SuggestionButton() {
 }
 ```
 
-7. Load the action type, and set the product description.
+* Load the action type, and set the product description.
 
 ```tsx
 import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
