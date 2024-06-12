@@ -211,6 +211,7 @@ const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 ```
 
 * Filter the block instance
+
 **Warning:** We only recommend using this filter with JavaScript/React outside of the block context, for example with the use of [`registerPlugin`](https://github.com/WordPress/gutenberg/blob/trunk/packages/plugins/README.md#registerplugin).
 But for the sake of **demo** purposes, we will import the JS below within a block.
 
