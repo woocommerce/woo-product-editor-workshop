@@ -40,10 +40,30 @@ password: `password`
 npx @wordpress/create-block --template @woocommerce/create-product-editor-block
 ```
 
-[@woocommerce/create-product-editor-block](https://github.com/woocommerce/woocommerce/blob/trunk/packages/js/create-product-editor-block/README.md) package
+_[@wordpress/create-block](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/)_
 
-- Start wp-env in the main repo ( `wp-env start`)
-- `cd plugin-name`
+_[@woocommerce/create-product-editor-block](https://github.com/woocommerce/woocommerce/blob/trunk/packages/js/create-product-editor-block/README.md)_
+
+- Start wp-env in the main repo
+
+In the root of the project:
+
+```
+npx @wordpress/env start
+```
+
+_[@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/)_
+
+
+- Watch & Compile 
+
+```
+cd plugin/name
+```
+
+```
+npm run build
+```
 
 ```
 npm start
@@ -100,10 +120,32 @@ if ( $general ) {
 
 ### Step 3
 
-- Go to Gutenberg storybook -> https://wordpress.github.io/gutenberg/?path=/docs/components-comboboxcontrol--docs
+We use the [ComboboxControl](https://wordpress.github.io/gutenberg/?path=/docs/components-comboboxcontrol--docs) core component in the block.
+
+_[@wordpress/components](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/)_
+
+
+Outside of edit function:
+```js
+const options = [
+    {
+        value: 'small',
+        label: 'Small',
+    },
+    {
+        value: 'normal',
+        label: 'Normal',
+    },
+    {
+        value: 'large',
+        label: 'Large',
+    },
+];
+```
+
 - Copy over ComboboxControl example to the `src/edit.tsx`
 Within Edit function:
-```javascript
+```js
 const [ animalType, setAnimalType ] = useState();
 const [ filteredOptions, setFilteredOptions ] = useState( options );
  
@@ -125,23 +167,7 @@ return <div { ...blockProps }>
     />
 </div>;
 ```
-Outside of edit function:
-```javascript
-const options = [
-    {
-        value: 'small',
-        label: 'Small',
-    },
-    {
-        value: 'normal',
-        label: 'Normal',
-    },
-    {
-        value: 'large',
-        label: 'Large',
-    },
-];
-```
+
 - Remove yellow background styling in `src/editor.scss`.
 
 ### Step 4
@@ -165,7 +191,12 @@ const options = [
 ];
 ```
 
-- Add `postType` context by adding `"usesContext": [ "postType" ],` to the `block.json`
+- Add `postType` context by adding...
+
+```json
+"usesContext": [ "postType" ],
+```
+...to the `block.json`
 
 #### Save `animalType` as meta data:
 
@@ -175,7 +206,7 @@ import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woo
 ```
 - Using the `postType` from the context add this line within the Edit function:
 
-```javascript
+```js
 const [ animalType, setAnimalType ] = useProductEntityProp< string >( 'meta_data.animal_type', {
 	postType: context.postType,
 	fallbackValue: '',
@@ -198,7 +229,7 @@ const [ tags, setTags ] = useEntityProp( 'postType', context.postType, 'tags' );
 ```
 - Add:
 
-```javascript
+```js
 const onAnimalSelection = ( value: string ) => {
 	setAnimalType( value );
 	// get selected option.
