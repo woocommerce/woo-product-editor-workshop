@@ -174,3 +174,138 @@ $animal_details->add_block(
 	),
 ),
 ```
+
+### Step 7 - Extending blocks
+
+Let's put the whole extending code in its file.
+Create and import a new `extend/index.tsx` file.
+
+```ts
+import './extend';
+```
+
+* Import relevant functions
+
+```js
+/**
+ * External dependencies
+ */
+import { createHigherOrderComponent } from '@wordpress/compose';
+import { addFilter } from '@wordpress/hooks';
+
+```
+
+* Create with `withAnimalToTheRescue` HOC:
+
+```tsx
+const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
+	return ( props ) => {
+		return (
+			<>
+				<h1>🐶 knows!</h1>
+				<BlockEdit { ...props } />
+			</>
+		);
+	};
+}, 'withAnimalToTheRescue' );
+```
+
+* Filter the block instance
+**Warning:** We only recommend using this filter with JavaScript/React outside of the block context, for example with the use of [`registerPlugin`](https://github.com/WordPress/gutenberg/blob/trunk/packages/plugins/README.md#registerplugin).
+But for the sake of **demo** purposes, we will import the JS below within a block.
+
+```tsx
+addFilter(
+	'editor.BlockEdit',
+	'example-animal-data-selector/extend/with-animal-to-the-rescue',
+	withAnimalToTheRescue
+);
+```
+
+* Extend the specific block instance
+
+```tsx
+const { name, attributes } = props;
+
+const { _templateBlockId } = attributes;
+
+if ( name !== 'woocommerce/product-summary-field' ) {
+	return <BlockEdit { ...props } />;
+}
+
+if ( _templateBlockId !== 'product-description__content' ) {
+	return <BlockEdit { ...props } />;
+}
+//...
+```
+
+* Fill the `<SectionActions />` slot
+
+```tsx
+import { __experimentalSectionActions as SectionActions } from '@woocommerce/product-editor';
+```
+
+```tsx
+<SectionActions>
+	<h1>🐶 knows!</h1>
+</SectionActions>
+```
+
+* Create the SuggestionButton component
+
+```tsx
+import { Button } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import { Icon, bug } from '@wordpress/icons';
+```
+
+```tsx
+function SuggestionButton() {
+	return (
+		<Button
+			variant="secondary"
+			icon={ <Icon icon={ bug } /> }
+			onClick={ console.log }
+		>
+			{ __( 'Need help with this block?', 'woocommerce' ) }
+		</Button>
+	);
+}
+```
+
+* Load the action type, and set the product description.
+
+```tsx
+import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
+import { useEntityProp } from '@wordpress/core-data';
+```
+
+```tsx
+const [ animalType ] = useProductEntityProp< string >(
+	'meta_data.animal_type',
+	{
+		postType: 'product',
+		fallbackValue: '',
+	}
+);
+```
+
+```tsx
+const [ , setDescription ] = useEntityProp(
+	'postType',
+	'product',
+	'description'
+);
+```
+
+```tsx
+function suggestDescription() {
+	if ( ! animalType ) {
+		return;
+	}
+
+	setDescription(
+		`This product is perfect for your ${ animalType.toUpperCase() }!`
+	);
+}
+```
