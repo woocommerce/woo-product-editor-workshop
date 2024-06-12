@@ -13,6 +13,7 @@ import './editor.scss'; // see https://www.npmjs.com/package/@wordpress/scripts#
  */
 import { AnimalSelectorEdit } from './edit';
 import metadata from './block.json';
+import './extend';
 
 /**
  * Every block starts by registering a new block type definition.
