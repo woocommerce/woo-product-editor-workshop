@@ -30,19 +30,19 @@ WP_ENV_PORT=88 wp-env start
 user: `admin`
 password: `password`
 
+
 ## Steps
 
 ### Step 1 
 
 - Create the plugin:
-
 ```
 npx @wordpress/create-block --template @woocommerce/create-product-editor-block
 ```
 
 [@woocommerce/create-product-editor-block](https://github.com/woocommerce/woocommerce/blob/trunk/packages/js/create-product-editor-block/README.md) package
 
-- Start wp-env in the main repo.
+- Start wp-env in the main repo ( `wp-env start`)
 - `cd plugin-name`
 
 ```
@@ -168,6 +168,7 @@ const options = [
 - Add `postType` context by adding `"usesContext": [ "postType" ],` to the `block.json`
 
 #### Save `animalType` as meta data:
+
 - Add import:
 ```
 import { __experimentalUseProductEntityProp as useProductEntityProp } from '@woocommerce/product-editor';
@@ -184,6 +185,7 @@ const [ animalType, setAnimalType ] = useProductEntityProp< string >( 'meta_data
 ### Step 5
 
 #### Update tags with animal type:
+
 - Add import:
   
 ```js
@@ -199,9 +201,11 @@ const [ tags, setTags ] = useEntityProp( 'postType', context.postType, 'tags' );
 ```javascript
 const onAnimalSelection = ( value: string ) => {
 	setAnimalType( value );
+	// get selected option.
 	const option = filteredOptions.find( opt => opt.value === value );
 	if ( option ) {
 		setTags([
+			// Filter out any other animal type tags if they exist.
 			...( tags.filter( tag => ! tag.slug.startsWith('animal_type_') ) ),
 			{
 				name: option?.label,
@@ -213,30 +217,9 @@ const onAnimalSelection = ( value: string ) => {
 ```
 - Replace the `onChange` function with `onAnimalSelection`
 
-### Step 6
+### Step 6 - Add re-usable block
 
-- Move block to its own directory, creating: `src/blocks/animal-breed`
-- Move `block.json`, `edit.tsx`, `editor.scss`, and `index.ts` to  `src/blocks/animal-breed`
-- Update `register_block_type_from_metadata( __DIR__ . '/build' );` to `register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-data-selector' );`
-- Run `npx @wordpress/create-block --template @woocommerce/create-product-editor-block --no-plugin` within `src/blocks`
-- Add `BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build/blocks/animal-breed' );` ( new block )
-- Update template by adding:
-```php
-$animal_details->add_block(
-	[
-		'id' 	     => 'wordcamp-example-animal-breed-selector',
-		'order'	     => 40,
-		'blockName'  => 'wordcamp/animal-breed',
-		'attributes' => [
-			'message' => 'Example Animal Data Selector',
-		]
-	]
-);
-```
-
-### Step 7
-
-Use re-useable blocks.
+Use re-useable blocks. See this [README](https://github.com/woocommerce/woocommerce/blob/trunk/packages/js/product-editor/src/blocks/generic/README.md) for a list of each re-useable block and the attributes it supports.
 - Add animal age block:
 ```php
 $animal_details->add_block(
@@ -265,33 +248,7 @@ $animal_details->add_block(
 ),
 ```
 
-### Step 8
-
-Add editor block to specifically render the animal information.
-- Run `npx @wordpress/create-block --no-plugin` within `src/blocks`
-- Add `register_block_type( __DIR__ . '/build/blocks/animal-info');` ( new block )
-- Add `"usesContext": [ "postId" ],` to `block.json`
-- Update the `render.php` file and add:
-```php
-$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : '';
-$product = wc_get_product( $post_id );
-
-if ( ! $product ) {
-	return '';
-}
-
-$animal_type = get_post_meta( $post_id, 'animal_type', true );
-$animal_age = get_post_meta( $post_id, 'animal_age', true );
-?>
-<h3>Animal Info:</h3>
-<p>
-<?php esc_html_e( 'Type', 'animal-info' ); ?>: <?php echo $animal_type ?><br/>
-<?php esc_html_e( 'Age', 'animal-info' ); ?>: <?php echo $animal_age ?><br/>
-</p>
-```
-- Use the new animal info block within the Site Editor `Single Product` template.
-
-#### Step 9: Extending blocks
+### Step 7 - Extending blocks
 
 Let's put the whole extending code in its file.
 Create and import a new `extend/index.tsx` file.
@@ -308,7 +265,7 @@ import './extend';
  */
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
-import { Icon, bug } from '@wordpress/icons';
+
 ```
 
 * Create with `withAnimalToTheRescue` HOC:
@@ -327,6 +284,9 @@ const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 ```
 
 * Filter the block instance
+
+**Warning:** We only recommend using this filter with JavaScript/React outside of the block context, for example with the use of [`registerPlugin`](https://github.com/WordPress/gutenberg/blob/trunk/packages/plugins/README.md#registerplugin).
+But for the sake of **demo** purposes, we will import the JS below within a block.
 
 ```tsx
 addFilter(
@@ -370,6 +330,7 @@ import { __experimentalSectionActions as SectionActions } from '@woocommerce/pro
 ```tsx
 import { Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { Icon, bug } from '@wordpress/icons';
 ```
 
 ```tsx
@@ -422,3 +383,39 @@ function suggestDescription() {
 	);
 }
 ```
+
+### Step 8 - Using data in site editor
+
+Add editor block to specifically render the animal information.
+- Run `npx @wordpress/create-block --no-plugin` within `src/` ( using **dynamic** block, and **animal-info** as the block slug )
+- Add `register_block_type( __DIR__ . '/build/animal-info');` ( new block ) for more info on the block registration see: https://developer.wordpress.org/block-editor/getting-started/fundamentals/block-json/ 
+- Add `"usesContext": [ "postId" ],` to `block.json`
+- Update the `render.php` file and add:
+```php
+<?php
+$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : '';
+$product = wc_get_product( $post_id );
+
+if ( ! $product ) {
+	return '';
+}
+
+$animal_type = get_post_meta( $post_id, 'animal_type', true );
+$animal_age = get_post_meta( $post_id, 'animal_age', true );
+?>
+<div <?php echo get_block_wrapper_attributes(); ?>>
+	<h3>Animal Info:</h3>
+	<p>
+		<?php esc_html_e( 'Type', 'animal-info' ); ?>: <?php echo $animal_type ?><br/>
+		<?php esc_html_e( 'Age', 'animal-info' ); ?>: <?php echo $animal_age ?><br/>
+	</p>
+</div>
+```
+- Add this to "supports" within the `block.json` so we can also set the background and text colour:
+```json
+"color": {
+    "text": true,
+    "background": true
+}
+```
+- Use the new animal info block within the Site Editor `Single Product` template.
