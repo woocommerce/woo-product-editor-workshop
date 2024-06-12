@@ -4,6 +4,8 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 import { createHigherOrderComponent } from '@wordpress/compose';
+import { __experimentalSectionActions as SectionActions } from '@woocommerce/product-editor';
+
 
 const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
     
@@ -21,7 +23,9 @@ const withAnimalToTheRescue = createHigherOrderComponent( ( BlockEdit ) => {
 
 		return (
 			<>
-				<h1>🐶 knows!</h1>
+				<SectionActions>
+	                <h1>🐶 knows!</h1>
+                </SectionActions>
 				<BlockEdit { ...props } />
 			</>
 		);
