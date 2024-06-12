@@ -47,12 +47,12 @@ npx json-server fixture/db.json --port 3000 --host localhost --static .public
 
 ## Steps
 
-#### Step 1 
+### Step 1 
 
 - Create the plugin `npx @wordpress/create-block --template @woocommerce/create-product-editor-block`
 - Start wp-env 
 
-#### Step 2
+### Step 2
 
 - Create new section in the general tab using `get_group_by_id` and `add_section`
 Changing:
@@ -99,13 +99,13 @@ if ( $general ) {
 }
 ```
 
-#### Step 3
+### Step 3
 
 - Go to Gutenberg storybook -> https://wordpress.github.io/gutenberg/?path=/docs/components-comboboxcontrol--docs
 - Copy over ComboboxControl example to the `src/edit.tsx`
 - Remove yellow background styling in `src/editor.scss`.
 
-#### Step 4
+### Step 4
 
 - Update dropdown with sample data.
 - Add `postType` context by adding `"usesContext": [ "postType" ],` to the `block.json`
@@ -119,7 +119,7 @@ if ( $general ) {
 	} );
     ```
 
-#### Step 5
+### Step 5
 
 - Update tags with animal type:
      - Add import: `import { useEntityProp } from '@wordpress/core-data';`
@@ -144,3 +144,33 @@ if ( $general ) {
     ```
     - Replace the `onChange` function with `onAnimalSelection`
 
+### Step 6 - Add re-usable block
+
+Use re-useable blocks.
+- Add animal age block:
+```php
+$animal_details->add_block(
+	[
+		'id' 	     => 'wordcamp-example-animal-age',
+		'order'	     => 40,
+		'blockName'  => 'woocommerce/product-number-field',
+		'attributes' => [
+			'label' => 'Animal age',
+			'property' => 'meta_data.animal_age',
+			'suffix' => 'Yrs',
+			'placeholder' => 'Age of animal',
+			'required' => true,
+			'min' => 1,
+			'max' => 20
+		],
+	]
+);
+```
+- Add hide condition:
+```php
+'hideConditions' => array(
+	array(
+		'expression' => '! editedProduct.meta_data.animal_type',
+	),
+),
+```
