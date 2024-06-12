@@ -27,6 +27,7 @@ use Automattic\WooCommerce\Admin\Features\ProductBlockEditor\BlockRegistry;
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function wordcamp_example_animal_data_selector_block_init() {
+	register_block_type( __DIR__ . '/build/animal-info');
 	if ( isset( $_GET['page'] ) && $_GET['page'] === 'wc-admin' ) {
 		BlockRegistry::get_instance()->register_block_type_from_metadata( __DIR__ . '/build' );
 	}
