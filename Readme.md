@@ -310,3 +310,39 @@ function suggestDescription() {
 	);
 }
 ```
+
+### Step 8 - Using data in site editor
+
+Add editor block to specifically render the animal information.
+- Run `npx @wordpress/create-block --no-plugin` within `src/` ( using **dynamic** block, and **animal-info** as the block slug )
+- Add `register_block_type( __DIR__ . '/build/animal-info');` ( new block ) for more info on the block registration see: https://developer.wordpress.org/block-editor/getting-started/fundamentals/block-json/ 
+- Add `"usesContext": [ "postId" ],` to `block.json`
+- Update the `render.php` file and add:
+```php
+<?php
+$post_id = isset( $block->context['postId'] ) ? $block->context['postId'] : '';
+$product = wc_get_product( $post_id );
+
+if ( ! $product ) {
+	return '';
+}
+
+$animal_type = get_post_meta( $post_id, 'animal_type', true );
+$animal_age = get_post_meta( $post_id, 'animal_age', true );
+?>
+<div <?php echo get_block_wrapper_attributes(); ?>>
+	<h3>Animal Info:</h3>
+	<p>
+		<?php esc_html_e( 'Type', 'animal-info' ); ?>: <?php echo $animal_type ?><br/>
+		<?php esc_html_e( 'Age', 'animal-info' ); ?>: <?php echo $animal_age ?><br/>
+	</p>
+</div>
+```
+- Add this to "supports" within the `block.json` so we can also set the background and text colour:
+```json
+"color": {
+    "text": true,
+    "background": true
+}
+```
+- Use the new animal info block within the Site Editor `Single Product` template.
