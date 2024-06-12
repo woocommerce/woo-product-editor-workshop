@@ -128,9 +128,11 @@ if ( $general ) {
     ```javascript
     const onAnimalSelection = ( value: string ) => {
 		setAnimalType( value );
+		// get selected option.
 		const option = filteredOptions.find( opt => opt.value === value );
 		if ( option ) {
 			setTags([
+				// Filter out any other animal type tags if they exist.
 				...( tags.filter( tag => ! tag.slug.startsWith('animal_type_') ) ),
 				{
 					name: option?.label,

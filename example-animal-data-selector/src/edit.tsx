@@ -67,10 +67,12 @@ export function AnimalSelectorEdit( {
 	const onAnimalSelection = ( value: AnimalType ) => {
 		setAnimalType( value );
 
+		// get selected option.
 		const option = filteredOptions.find( ( opt ) => opt.value === value );
 
 		if ( option ) {
 			const newTags = [
+				// Filter out any other animal type tags if they exist.
 				...tags.filter(
 					( tag ) => ! tag.slug.startsWith( 'animal_type_' )
 				),
