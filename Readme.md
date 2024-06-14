@@ -294,6 +294,7 @@ import './extend';
 /**
  * External dependencies
  */
+import React from 'react';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
 
