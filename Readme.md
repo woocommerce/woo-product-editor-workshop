@@ -373,7 +373,7 @@ function SuggestionButton() {
 			icon={ <Icon icon={ bug } /> }
 			onClick={ console.log }
 		>
-			{ __( 'Need help with this block?', 'woocommerce' ) }
+			{ __( '🐥 Animals to the Rescue!', 'woocommerce' ) }
 		</Button>
 	);
 }
